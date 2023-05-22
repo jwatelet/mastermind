@@ -1,65 +1,5 @@
-class Peg
-  RED = "\033[31m●\033[0m".freeze
-  GREEN = "\033[32m●\033[0m".freeze
-  YELLOW = "\033[33m●\033[0m".freeze
-  BLUE = "\033[34m●\033[0m".freeze
-  PINK = "\033[35m●\033[0m".freeze
-  WHITE = "\033[37m●\033[0m".freeze
-
-  RIGHT_PLACE = "\033[37m■\033[0m".freeze
-  RIGHT_COLOR = "\033[37m□\033[0m".freeze
-
-  def self.create(char)
-    case char
-    when 'r'
-      RED
-    when 'g'
-      GREEN
-    when 'y'
-      YELLOW
-    when 'b'
-      BLUE
-    when 'p'
-      PINK
-    when 'w'
-      WHITE
-    end
-  end
-end
-
-class Computer
-  attr_reader :code
-
-  def initialize
-    @code = Code.new
-  end
-
-  def check(guess)
-    guess.each_with_index.map do |peg, index|
-      if peg == @code.pegs[index]
-        Peg::RIGHT_PLACE
-      elsif @code.pegs.include?(peg)
-        Peg::RIGHT_COLOR
-      end
-    end.compact
-  end
-
-  def win?(hints)
-    hints.all? { |peg| peg == Peg::RIGHT_PLACE }
-  end
-end
-
-class Code
-  attr_reader :pegs
-
-  def initialize
-    @pegs = [Peg::RED, Peg::GREEN, Peg::YELLOW, Peg::BLUE, Peg::PINK, Peg::WHITE].shuffle.take(4)
-  end
-
-  def to_s
-    @pegs.join(' ')
-  end
-end
+require_relative './peg'
+require_relative './computer'
 
 class Mastermind
   def initialize
@@ -81,7 +21,6 @@ class Mastermind
       hints = @computer.check(guess)
       puts hints.join(' ')
       @steps -= 1
-      puts @computer.win?(hints)
       break if @computer.win?(hints) || @steps.zero?
     end
 
@@ -140,9 +79,10 @@ class Mastermind
   end
 
   def show_steps
-    puts "#{@steps} guesses left"
+    if @steps > 1
+      puts "#{@steps} guesses left"
+    else
+      puts "#{@steps} guess left"
+    end
   end
 end
-
-mastermind = Mastermind.new
-mastermind.start
