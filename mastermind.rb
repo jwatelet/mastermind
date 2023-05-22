@@ -1,5 +1,6 @@
 require_relative './peg'
 require_relative './computer'
+require_relative './guess'
 
 class Mastermind
   def initialize
@@ -17,7 +18,7 @@ class Mastermind
       show_steps
       guess = gets_user_guess
 
-      puts guess.join(' ')
+      puts guess
       hints = @computer.check(guess)
       puts hints.join(' ')
       @steps -= 1
@@ -59,12 +60,12 @@ class Mastermind
   end
 
   def gets_user_guess
-    guess = ''
+    guess_string = ''
     loop do
       validate = false
-      guess = gets.chomp.downcase
+      guess_string = gets.chomp.downcase
 
-      if guess.match?(/^[rgypbw]+$/) && guess.length == 4
+      if guess_string.match?(/^[rgypbw]+$/) && guess_string.length == 4
         validate = true
       else
         puts "\033[31mEnter only 4 letters caracters\033[0m"
@@ -73,9 +74,7 @@ class Mastermind
       break if validate
     end
 
-    guess.split('').map do |char|
-      Peg.create(char)
-    end
+    Guess.new(guess_string)
   end
 
   def show_steps
