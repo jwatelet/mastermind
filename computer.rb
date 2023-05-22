@@ -8,7 +8,7 @@ class Computer
   end
 
   def check(guess)
-    guess.pegs.each_with_index.map do |peg, index|
+    guess.pegs.uniq.each_with_index.map do |peg, index|
       if peg == @code.pegs[index]
         Peg::RIGHT_PLACE
       elsif @code.pegs.include?(peg)
