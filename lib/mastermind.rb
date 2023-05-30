@@ -29,6 +29,7 @@ class Mastermind
     code = gets_user_code
     self.rule_engine = RuleEngine.new(code: code)
     checker_game_loop
+    @display.puts_victory_or_defeat(@steps)
   end
 
   def play_guesser
