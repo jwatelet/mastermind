@@ -19,7 +19,7 @@ class RuleEngine
   def check(guess)
     hints = []
     guess_without_right_place = []
-    code_without_right_place = @code.pegs
+    code_without_right_place = @code.pegs.map(&:clone)
     guess.pegs.each_with_index do |peg, index|
       if peg == @code.pegs[index]
         hints << Peg::RIGHT_PLACE
