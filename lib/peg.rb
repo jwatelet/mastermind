@@ -5,6 +5,7 @@ class Peg
   BLUE = "\033[34m●\033[0m".freeze
   PINK = "\033[35m●\033[0m".freeze
   WHITE = "\033[37m●\033[0m".freeze
+  ALL_PEGS = [Peg::RED, Peg::GREEN, Peg::YELLOW, Peg::BLUE, Peg::PINK, Peg::WHITE].freeze
 
   RIGHT_PLACE = "\033[37m■\033[0m".freeze
   RIGHT_COLOR = "\033[37m□\033[0m".freeze

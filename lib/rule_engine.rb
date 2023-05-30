@@ -1,4 +1,5 @@
 require_relative './code'
+require_relative './hint'
 
 class RuleEngine
   attr_reader :code
@@ -16,16 +17,22 @@ class RuleEngine
   end
 
   def check(guess)
-    guess.pegs.uniq.each_with_index.map do |peg, index|
+    hints = []
+    guess_without_right_place = []
+    code_without_right_place = @code.pegs
+    guess.pegs.each_with_index do |peg, index|
       if peg == @code.pegs[index]
-        Peg::RIGHT_PLACE
-      elsif @code.pegs.include?(peg)
-        Peg::RIGHT_COLOR
+        hints << Peg::RIGHT_PLACE
+        code_without_right_place.delete_at(index)
+      else
+        guess_without_right_place << peg
       end
-    end.compact.sort
-  end
+    end
 
-  def win?(hints)
-    hints.all? { |peg| peg == Peg::RIGHT_PLACE } && hints.size == 4
+    guess_without_right_place.map do |peg|
+      hints << Peg::RIGHT_COLOR if code_without_right_place.include?(peg)
+    end
+
+    Hint.new(hints)
   end
 end

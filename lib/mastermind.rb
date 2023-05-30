@@ -1,6 +1,7 @@
 require_relative './peg'
 require_relative './rule_engine'
 require_relative './display'
+require_relative './hint'
 
 class Mastermind
   attr_accessor :rule_engine, :steps
@@ -34,6 +35,7 @@ class Mastermind
 
   def play_guesser
     self.rule_engine = RuleEngine.new
+    puts rule_engine.code
     @display.puts_pegs_letters
     @display.puts_hint_letters
     guesser_game_loop
@@ -46,10 +48,10 @@ class Mastermind
       @display.puts_steps(@steps)
       guess = gets_user_code
       puts guess
-      hints = rule_engine.check(guess)
-      puts hints.join(' ')
+      hint = rule_engine.check(guess)
+      puts hint
       @steps -= 1
-      break if rule_engine.win?(hints) || @steps.zero?
+      break if hint.win? || @steps.zero?
     end
   end
 
@@ -58,10 +60,10 @@ class Mastermind
       @display.puts_steps(@steps)
       code = Code.new
       puts code
-      hints = rule_engine.check(code)
-      puts hints.join(' ')
+      hint = rule_engine.check(code)
+      puts hint
       @steps -= 1
-      break if @steps.zero? || rule_engine.win?(hints)
+      break if @steps.zero? || hint.win?
     end
   end
 
