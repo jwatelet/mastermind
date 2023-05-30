@@ -1,4 +1,4 @@
-require_relative './mastermind'
+require_relative './lib/mastermind'
 
 mastermind = Mastermind.new
 mastermind.start

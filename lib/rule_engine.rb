@@ -1,10 +1,18 @@
 require_relative './code'
 
-class Computer
+class RuleEngine
   attr_reader :code
 
-  def initialize
-    @code = Code.new
+  def initialize(**hash)
+    @code = initialize_code(hash)
+  end
+
+  def initialize_code(hash)
+    if hash[:code].nil?
+      Code.new
+    else
+      hash[:code]
+    end
   end
 
   def check(guess)
