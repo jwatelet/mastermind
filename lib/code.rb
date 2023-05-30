@@ -1,6 +1,8 @@
 require_relative './peg'
 
 class Code
+  ALL_PEGS = [Peg::RED, Peg::GREEN, Peg::YELLOW, Peg::BLUE, Peg::PINK, Peg::WHITE]
+
   attr_reader :pegs
 
   def initialize(**hash)
@@ -13,7 +15,7 @@ class Code
         Peg.create(char)
       end
     else
-      [Peg::RED, Peg::GREEN, Peg::YELLOW, Peg::BLUE, Peg::PINK, Peg::WHITE].shuffle.take(4)
+      @pegs = 4.times.map { random_peg }
     end
   end
 
@@ -23,5 +25,9 @@ class Code
 
   def to_s
     @pegs.join(' ')
+  end
+
+  def random_peg
+    ALL_PEGS.sample
   end
 end

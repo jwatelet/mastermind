@@ -55,6 +55,7 @@ class Mastermind
 
   def checker_game_loop
     loop do
+      @display.puts_steps(@steps)
       code = Code.new
       puts code
       hints = rule_engine.check(code)
