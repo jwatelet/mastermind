@@ -1,6 +1,12 @@
 class Hint
+  attr_reader :pegs
+
   def initialize(pegs)
     @pegs = pegs
+  end
+
+  def ==(other)
+    @pegs == other.pegs
   end
 
   def to_s

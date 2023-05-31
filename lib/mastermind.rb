@@ -2,6 +2,7 @@ require_relative './peg'
 require_relative './rule_engine'
 require_relative './display'
 require_relative './hint'
+require_relative './code_cracker'
 
 class Mastermind
   attr_accessor :rule_engine, :steps
@@ -28,9 +29,10 @@ class Mastermind
     @display.puts_checker_instruction
     @display.puts_pegs_letters
     code = gets_user_code
-    self.rule_engine = RuleEngine.new(code: code)
-    checker_game_loop
-    @display.puts_victory_or_defeat(@steps)
+    code_cracker = CodeCracker.new(rule_engine: RuleEngine.new(code: code), remaining_guesses: @steps)
+
+    code = code_cracker.crack
+    @display.puts_solution(code)
   end
 
   def play_guesser
@@ -52,18 +54,6 @@ class Mastermind
       puts hint
       @steps -= 1
       break if hint.win? || @steps.zero?
-    end
-  end
-
-  def checker_game_loop
-    loop do
-      @display.puts_steps(@steps)
-      code = Code.new
-      puts code
-      hint = rule_engine.check(code)
-      puts hint
-      @steps -= 1
-      break if @steps.zero? || hint.win?
     end
   end
 

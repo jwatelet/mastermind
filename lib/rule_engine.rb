@@ -18,19 +18,24 @@ class RuleEngine
 
   def check(guess)
     hints = []
-    guess_without_right_place = []
-    code_without_right_place = @code.pegs.map(&:clone)
-    guess.pegs.each_with_index do |peg, index|
-      if peg == @code.pegs[index]
+    wrong_guess_pegs = []
+    wrong_answer_pegs = []
+    peg_pairs = guess.pegs.zip(@code.pegs)
+
+    peg_pairs.each do |guess_peg, answer_peg|
+      if guess_peg == answer_peg
         hints << Peg::RIGHT_PLACE
-        code_without_right_place.delete_at(index)
       else
-        guess_without_right_place << peg
+        wrong_guess_pegs << guess_peg
+        wrong_answer_pegs << answer_peg
       end
     end
 
-    guess_without_right_place.map do |peg|
-      hints << Peg::RIGHT_COLOR if code_without_right_place.include?(peg)
+    wrong_guess_pegs.each do |peg|
+      if wrong_answer_pegs.include?(peg)
+        wrong_answer_pegs.delete(peg)
+        hints << Peg::RIGHT_COLOR
+      end
     end
 
     Hint.new(hints)

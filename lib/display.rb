@@ -1,6 +1,11 @@
 require_relative './peg'
 
 class Dislay
+
+  def puts_solution(code)
+    puts "The solution is #{code}"
+  end
+
   def puts_general_instructions
     puts "\e[4mMastermind!\e[0m".center(80)
     puts 'The object of MASTERMIND (r) is to guess a secret code consisting of a series of 4 colored pegs.'
