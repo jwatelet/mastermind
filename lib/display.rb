@@ -2,6 +2,10 @@ require_relative './peg'
 
 class Dislay
 
+  def puts_computer_win
+    puts "Computer win!"
+  end
+
   def puts_solution(code)
     puts "The solution is #{code}"
   end

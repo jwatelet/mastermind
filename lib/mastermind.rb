@@ -30,8 +30,8 @@ class Mastermind
     @display.puts_pegs_letters
     code = gets_user_code
     code_cracker = CodeCracker.new(rule_engine: RuleEngine.new(code: code), remaining_guesses: @steps)
-
     code_cracker.crack
+    @display.puts_computer_win
   end
 
   def play_guesser

@@ -52,14 +52,14 @@ class CodeCracker
   def prune_list(last_guess, feedback)
     @knuth_codes.select! do |code|
       retrieved_feedback = RuleEngine.new(code: code).check(last_guess)
-      retrieved_feedback.to_s == feedback.to_s
+      retrieved_feedback == feedback
     end
   end
 
   def get_code
     case @remaining_guesses
     when 12
-      Code.new(color_string: 'rbgp')
+      Code.new(color_string: 'rrbb')
     else
       guess_codes = minimax
       code = get_guess_code_from_list(@knuth_codes, guess_codes)
