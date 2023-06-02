@@ -33,7 +33,6 @@ class RuleEngine
 
     wrong_guess_pegs.each do |peg|
       if wrong_answer_pegs.include?(peg)
-        wrong_answer_pegs.delete(peg)
         hints << Peg::RIGHT_COLOR
       end
     end
