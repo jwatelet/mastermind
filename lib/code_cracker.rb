@@ -30,6 +30,8 @@ class CodeCracker
     end
   end
 
+  private
+
   def minimax
     times_found = Hash.new(0)
     scores = {}
@@ -62,7 +64,7 @@ class CodeCracker
       Code.new(color_string: 'rrbb')
     else
       guess_codes = minimax
-      code = get_guess_code_from_list(@knuth_codes, guess_codes)
+      code = get_guess_code_from_list(guess_codes)
       @possible_codes.reject! do |possible_code|
         possible_code.to_s == code.to_s
       end
@@ -70,8 +72,8 @@ class CodeCracker
     end
   end
 
-  def get_guess_code_from_list(knuth_codes, guess_codes)
-    knuth_codes.each do |code|
+  def get_guess_code_from_list(guess_codes)
+    @knuth_codes.each do |code|
       guess = guess_codes.find { |guess_code| guess_code.to_s == code.to_s }
       return guess unless guess.nil?
     end
