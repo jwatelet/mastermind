@@ -28,6 +28,7 @@ class Mastermind
   def play_ckecker
     @display.puts_checker_instruction
     @display.puts_pegs_letters
+    @display.puts_hint_letters
     code = gets_user_code
     code_cracker = CodeCracker.new(rule_engine: RuleEngine.new(code: code), remaining_guesses: @steps)
     code_cracker.crack
