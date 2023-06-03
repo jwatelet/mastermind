@@ -40,7 +40,7 @@ class Dislay
   end
 
   def puts_pegs_letters
-    puts 'To chose a peg type the first letter of the color:'
+    puts 'To choose a peg type the first letter of the color:'
     puts "- #{Peg::RED}: R"
     puts "- #{Peg::GREEN}: G"
     puts "- #{Peg::YELLOW}: Y"
